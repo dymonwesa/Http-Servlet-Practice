@@ -13,10 +13,16 @@ import java.util.List;
 import java.util.Optional;
 
 public class FlightDao implements Dao<Long, Flight> {
+
+    private static final FlightDao INSTANCE = new FlightDao();
+
     private static final String FIND_ALL = """
             SELECT *
             FROM flight;
             """;
+
+    private FlightDao() {
+    }
 
     @Override
     public List<Flight> findAll() {
@@ -53,6 +59,11 @@ public class FlightDao implements Dao<Long, Flight> {
     public Flight save(Flight entity) {
         return null;
     }
+
+    public static FlightDao getInstance() {
+        return INSTANCE;
+    }
+
 
     private Flight buildFlight(ResultSet resultSet) {
         try {
