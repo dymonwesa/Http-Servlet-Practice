@@ -12,6 +12,18 @@ public class ConnectionManager {
     private ConnectionManager(){
 
     }
+
+    static {
+        loadDriver();
+    }
+
+    public static void loadDriver() {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static Connection get()  {
         try {
             return DriverManager.getConnection(
