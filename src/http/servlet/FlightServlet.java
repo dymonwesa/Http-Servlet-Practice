@@ -23,16 +23,20 @@ public class FlightServlet extends HttpServlet {
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
         try (var printWriter = resp.getWriter()) {
-            printWriter.write("<h1>Список перелетов</h1>");
+            printWriter.write("<h1>Список перелетов </h1>");
             printWriter.write("<ul>");
             flightService.findAll().forEach(flightDto -> {
-                printWriter.write("""
-                        <li>
-                        <a href="/tickets?flightId=%d">%s</a>
-                        </li>
-                        """.formatted(flightDto.getId(), flightDto.getDescription()));
+                try {
+                    printWriter.write("""
+                <li>
+                <a href="/tickets?flightId=%d">%s</a>
+                </li>
+                """.formatted(flightDto.getId(), flightDto.getDescription()));
+                } catch (Exception e) {
+                    printWriter.write("<li>Ошибка: " + e + "</li>");
+                }
             });
-
+           printWriter.write("Найдено перелётов: " + flightService.findAll().size());
             printWriter.write("</ul>");
 
         }

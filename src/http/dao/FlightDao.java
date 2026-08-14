@@ -26,17 +26,17 @@ public class FlightDao implements Dao<Long, Flight> {
 
     @Override
     public List<Flight> findAll() {
+        List<Flight> flights = new ArrayList<>();
         try (var connection = ConnectionManager.get()) {
             var preparedStatement = connection.prepareStatement(FIND_ALL);
             var resultSet = preparedStatement.executeQuery();
-            List<Flight> flights = new ArrayList<>();
             while (resultSet.next()) {
                 flights.add(buildFlight(resultSet));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return List.of();
+        return flights;
     }
 
 
@@ -69,13 +69,13 @@ public class FlightDao implements Dao<Long, Flight> {
         try {
             return new Flight(
                     resultSet.getObject("id", Long.class),
-                    resultSet.getObject("flightNo", String.class),
-                    resultSet.getObject("departureDate", LocalDateTime.class),
-                    resultSet.getObject("departureAirportCode", String.class),
-                    resultSet.getObject("arrivalDate", LocalDateTime.class),
-                    resultSet.getObject("arrivalAirportCode", String.class),
-                    resultSet.getObject("aircraftId", Integer.class),
-                    resultSet.getObject("status", FlightStatus.class)
+                    resultSet.getObject("flight_no", String.class),
+                    resultSet.getObject("departure_date", LocalDateTime.class),
+                    resultSet.getObject("departure_airport_code", String.class),
+                    resultSet.getObject("arrival_date", LocalDateTime.class),
+                    resultSet.getObject("arrival_airport_code", String.class),
+                    resultSet.getObject("aircraft_id", Integer.class),
+                    FlightStatus.valueOf(resultSet.getString("status"))
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);
