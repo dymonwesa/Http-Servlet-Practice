@@ -3,9 +3,11 @@ package dao;
 import entity.Ticket;
 import util.ConnectionManager;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,12 +34,28 @@ public class TicketDao implements Dao<Long, Ticket> {
             var preparedStatement = connection.prepareStatement(FIND_ALL_BY_FLIGHT_ID)){
             preparedStatement.setObject(1, flightId);
             var resultSet = preparedStatement.executeQuery();
-            List
+            List<Ticket> tickets = new ArrayList<>();
+            while (resultSet.next()){
+                tickets.add(buildTicket(resultSet));
+            }
+            return tickets;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
 
+    }
+
+    private Ticket buildTicket(ResultSet resultSet) throws SQLException {
+        return new Ticket(
+                resultSet.getObject("id", Long.class),
+                resultSet.getObject("passenger_no", String.class),
+                resultSet.getObject("passenger_name", String.class),
+                resultSet.getObject("flight_id", Long.class),
+                resultSet.getObject("seat_no", String.class),
+                resultSet.getObject("cost", BigDecimal.class)
+
+                );
     }
 
     @Override
