@@ -1,18 +1,24 @@
 package service;
 
 
+import dao.TicketDao;
 import dto.TicketDto;
 
 import java.util.List;
 
 public class TicketService {
 
-    public static final TicketService INSTANCE = new TicketService();
+    private static final TicketService INSTANCE = new TicketService();
+
+    private final TicketDao ticketDao = TicketDao.getInstance();
 
     private TicketService() {
     }
 
-    public List<TicketDto>
+    public List<TicketDto> findAllByFlightId(Long flightId){
+        return ticketDao.findAllByFlightId(flightId).stream()
+                .map(List)
+    }
 
     public static TicketService getInstance(){
         return INSTANCE;
