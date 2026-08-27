@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="service.TicketService" %>
 <%@ page import="dto.TicketDto" %>
 <%@ page import="java.util.List" %><%--
@@ -15,14 +16,9 @@
 <body>
 <h1>Купленные билеты</h1>
 <ul>
-<%
-    Long flightId = Long.valueOf(request.getParameter("flightId"));
-    List<TicketDto> tickets = TicketService.getInstance().findAllByFlightId(flightId);
-   for(TicketDto ticket : tickets){
-       out.write(String.format("<li>%s</li>", ticket.getSeatNo()));
-   }
-
-%>
+<c:forEach var="ticket" items="${requestScope.tickets}">
+    <li>${ticket.seatNo}</li>
+</c:forEach>
 </ul>
 </body>
 </html>
