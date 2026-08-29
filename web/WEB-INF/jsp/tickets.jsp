@@ -15,6 +15,7 @@
     <title>Title</title>
 </head>
 <body>
+<c: if test="${}"
 <h1>Купленные билеты</h1>
 <ul>
 <c:forEach var="ticket" items="${requestScope.tickets}">
