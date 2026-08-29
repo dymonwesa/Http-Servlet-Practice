@@ -1,4 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <%@ page import="service.TicketService" %>
 <%@ page import="dto.TicketDto" %>
 <%@ page import="java.util.List" %><%--
@@ -17,7 +18,7 @@
 <h1>Купленные билеты</h1>
 <ul>
 <c:forEach var="ticket" items="${requestScope.tickets}">
-    <li>${ticket.seatNo}</li>
+    <li>${fn:toLowerCase(ticket.seatNo)}</li>
 </c:forEach>
 </ul>
 </body>
