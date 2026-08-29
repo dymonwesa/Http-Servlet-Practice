@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="service.TicketService" %>
 <%@ page import="dto.TicketDto" %>
 <%@ page import="java.util.List" %><%--
