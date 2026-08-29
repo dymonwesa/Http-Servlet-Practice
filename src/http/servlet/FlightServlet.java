@@ -1,17 +1,26 @@
 package servlet;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.FlightService;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+
 @WebServlet("/flights")
 public class FlightServlet extends HttpServlet {
     private final FlightService flightService = FlightService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("flights", flightService.findAll());
+
+        req.getRequestDispatcher(JspHelper.getPath("flights"))
+                        .forward(req, resp);
+
         resp.setContentType("text/html");
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
         String contextPath = req.getContextPath();
@@ -21,10 +30,10 @@ public class FlightServlet extends HttpServlet {
             flightService.findAll().forEach(flightDto -> {
                 try {
                     printWriter.write("""
-                <li>
-                <a href="%s/tickets?flightId=%d">%s</a>
-                </li>
-                """.formatted(contextPath, flightDto.getId(), flightDto.getDescription()));
+                            <li>
+                            <a href="%s/tickets?flightId=%d">%s</a>
+                            </li>
+                            """.formatted(contextPath, flightDto.getId(), flightDto.getDescription()));
                 } catch (Exception e) {
                     printWriter.write("<li>Ошибка: " + e + "</li>");
                 }
