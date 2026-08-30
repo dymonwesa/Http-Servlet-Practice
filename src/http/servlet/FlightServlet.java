@@ -21,25 +21,6 @@ public class FlightServlet extends HttpServlet {
         req.getRequestDispatcher(JspHelper.getPath("flights"))
                         .forward(req, resp);
 
-        resp.setContentType("text/html");
-        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        String contextPath = req.getContextPath();
-        try (var printWriter = resp.getWriter()) {
-            printWriter.write("<h1>Список перелетов </h1>");
-            printWriter.write("<ul>");
-            flightService.findAll().forEach(flightDto -> {
-                try {
-                    printWriter.write("""
-                            <li>
-                            <a href="%s/tickets?flightId=%d">%s</a>
-                            </li>
-                            """.formatted(contextPath, flightDto.getId(), flightDto.getDescription()));
-                } catch (Exception e) {
-                    printWriter.write("<li>Ошибка: " + e + "</li>");
-                }
-            });
-            printWriter.write("Найдено перелётов: " + flightService.findAll().size());
-            printWriter.write("</ul>");
-        }
+
     }
 }
