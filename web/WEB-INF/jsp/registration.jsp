@@ -15,8 +15,9 @@
         <input type="date" name="email" id="emailId">
     </label>
     <label for="passwordId">Password:
-        <input type="date" name="birthday" id="birthday">
+        <input type="password" name="password" id="passwordId">
     </label>
+    <button type="submit">Send</button>
 </form>
 </body>
 </html>
