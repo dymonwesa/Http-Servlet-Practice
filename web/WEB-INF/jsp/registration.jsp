@@ -7,16 +7,16 @@
 <form action="/registration" method="post">
     <label for="name">Name:
         <input type="text" name="name" id="name">
-    </label>
+    </label><br>
     <label for="birthday">Birthday:
         <input type="date" name="birthday" id="birthday">
-    </label>
+    </label><br>
     <label for="emailId">Email:
-        <input type="date" name="email" id="emailId">
-    </label>
+        <input type="email" name="email" id="emailId">
+    </label><br>
     <label for="passwordId">Password:
         <input type="password" name="password" id="passwordId">
-    </label>
+    </label><br>
     <button type="submit">Send</button>
 </form>
 </body>
